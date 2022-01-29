@@ -57,6 +57,7 @@ public class MysqlDatasourceConfig {
             @Qualifier("mysqlArticleDatasource") DataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setShowSql(true);
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
@@ -68,7 +69,8 @@ public class MysqlDatasourceConfig {
 
     @Bean("transactionArticleManagerFactory")
     @Primary
-    public PlatformTransactionManager transactionManager(@Qualifier("entityArticleManagerFactory") EntityManagerFactory entityManagerFactory) {
+    public PlatformTransactionManager transactionManager(
+            @Qualifier("entityArticleManagerFactory") EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
         return jpaTransactionManager;
