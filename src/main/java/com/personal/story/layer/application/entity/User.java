@@ -1,5 +1,7 @@
 package com.personal.story.layer.application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,6 +27,7 @@ public class User {
     @Column(name = "updated_at")
     private long updatedAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Article> listArticle;
 }

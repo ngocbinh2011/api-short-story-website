@@ -30,7 +30,7 @@ public class PingController {
         article.setContent(new Content("this is content"));
         articleRepository.save(article);
 
-        Article a = articleRepository.findById(3);
+        Article a = articleRepository.findById(4);
         System.out.println(a.getContent());
 
 

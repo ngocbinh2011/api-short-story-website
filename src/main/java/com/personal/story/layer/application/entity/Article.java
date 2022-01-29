@@ -1,5 +1,7 @@
 package com.personal.story.layer.application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.personal.story.layer.application.model.Content;
 import lombok.Data;
 
@@ -28,7 +30,7 @@ public class Article {
     @Column(name = "code")
     private String code;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
 

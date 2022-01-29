@@ -1,14 +1,17 @@
 package com.personal.story.layer.application.model;
 
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.AttributeConverter;
 import java.io.*;
 
-
+@Data
 public class Content implements Serializable {
+
     private String data;
+    private static final long serialVersionUID = 3796886095916625573L;
 
     public Content(String data) {
         this.data = data;
@@ -47,6 +50,12 @@ public class Content implements Serializable {
                 logger.error("cant open object input stream", e);
             } catch (ClassNotFoundException e) {
                 logger.error("cant cast to content object", e);
+            } finally {
+                try {
+                    byteArrayInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             return null;
         }

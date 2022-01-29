@@ -1,5 +1,8 @@
 package com.personal.story.layer.application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,7 +19,8 @@ public class Category {
     @Column(name = "code")
     private String code;
 
-    @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
     private List<Article> articles;
 
 }

@@ -13,6 +13,8 @@ import java.util.Scanner;
 public class Settings {
     private static Logger logger = LoggerFactory.getLogger(Settings.class);
 
+    public int SERVER_PORT = 8081;
+
     public int MYSQL_ARTICLE_PORT = 3306;
     public String MYSQL_ARTICLE_DBNAME = "mydb";
     public String MYSQL_ARTICLE_USERNAME = "root";
@@ -44,7 +46,7 @@ public class Settings {
                             stringBuilder.append("\n");
                         }
                         instance = objectMapper.readValue(enviroment, Settings.class);
-                        logger.info("Server running with custome enviroment: ");
+                        logger.info("$$$$$Server overriding enviroment settings:$$$$$");
                         logger.info(stringBuilder.toString());
                         return instance;
                     } catch (IOException e) {
