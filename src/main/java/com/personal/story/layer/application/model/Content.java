@@ -1,5 +1,6 @@
 package com.personal.story.layer.application.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +10,9 @@ import java.io.*;
 
 @Data
 public class Content implements Serializable {
-
+    @JsonProperty("data")
     private String data;
     private static final long serialVersionUID = 3796886095916625573L;
-
-    public Content(String data) {
-        this.data = data;
-    }
 
     public static class ContentConverter implements AttributeConverter<Content, byte[]> {
         private static final Logger logger = LoggerFactory.getLogger(Content.class);
@@ -61,10 +58,4 @@ public class Content implements Serializable {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Content{" +
-                "data='" + data + '\'' +
-                '}';
-    }
 }

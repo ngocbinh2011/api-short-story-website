@@ -32,5 +32,10 @@ public class ArticleService implements IArticleService {
         return articleRepository.save(article);
     }
 
+    @Override
+    public Article getById(int id) {
+        return articleRepository.findById(id);
+    }
+
 
 }

@@ -17,23 +17,8 @@ import java.sql.SQLException;
 @RestController
 public class PingController {
 
-    @Autowired
-    ArticleRepository articleRepository;
-
     @GetMapping("/ping")
     public String ping() throws SQLException {
-
-        Article article = new Article();
-        article.setTittle("title");
-        User user = new User(); user.setId(1);
-        article.setAuthor(user);
-        article.setContent(new Content("this is content"));
-        articleRepository.save(article);
-
-        Article a = articleRepository.findById(4);
-        System.out.println(a.getContent());
-
-
         return "ping success";
     }
 }
