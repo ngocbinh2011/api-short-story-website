@@ -32,13 +32,13 @@ public class ArticalController {
     private IArticleService articleService;
 
     @GetMapping(value = "")
-    public ResponseEntity<?> getList(){
+    public ResponseEntity<?> getList() {
         return ResponseEntity.status(HttpStatus.OK).body(articleService.getAll());
-       // return Response.format(articleService.getAll(), HttpStatus.OK, "done");
+        // return Response.format(articleService.getAll(), HttpStatus.OK, "done");
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> saveArticle(@RequestBody Article article){
+    public ResponseEntity<?> saveArticle(@RequestBody Article article) {
         try {
             article.setCreatedAt(System.currentTimeMillis());
             Article result = articleService.save(article);
@@ -50,18 +50,18 @@ public class ArticalController {
         }
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getArticleById(@PathVariable("id") int id){
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    articleService.getById(id));
-        } catch (Throwable e){
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getArticleById(@PathVariable("id") int id) {
+        try {
+            Article a = articleService.getById(id);
+            System.out.println(a.getAuthor().getRoles());
+            return ResponseEntity.status(HttpStatus.OK).body(articleService.getById(id));
+        } catch (Throwable e) {
             logger.error("number format not supported!", e);
             String message = "number format not supported!";
             return Response.format(null, HttpStatus.BAD_REQUEST, message);
         }
     }
-
 
 
 }

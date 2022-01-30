@@ -1,6 +1,10 @@
 package com.personal.story.layer.application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
@@ -9,23 +13,30 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "role")
+    @Convert(converter = Permission.RoleConverter.class)
+    private Permission role;
 
-    private Permission permission;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 
-    enum Permission {
+    public enum Permission {
         ADMIN, WRITER, READER;
 
-        static class RoleConverter implements AttributeConverter<Role, String>{
+        public static class RoleConverter implements AttributeConverter<Permission, String>{
 
             @Override
-            public String convertToDatabaseColumn(Role role) {
-                return null;
+            public String convertToDatabaseColumn(Permission role) {
+                return role.toString();
             }
 
             @Override
-            public Role convertToEntityAttribute(String s) {
-                return null;
+            public Permission convertToEntityAttribute(String s) {
+                return Permission.valueOf(s);
             }
         }
+
     }
+
 }

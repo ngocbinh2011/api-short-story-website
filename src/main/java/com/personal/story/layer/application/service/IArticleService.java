@@ -9,5 +9,5 @@ import java.util.List;
 public interface IArticleService {
     List<Article> getAll();
     Article save(Article article) throws Exception;
-    Article getById(int id);
+    Article getById(int id) throws Exception;
 }

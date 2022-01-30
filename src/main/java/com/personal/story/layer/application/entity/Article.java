@@ -43,7 +43,7 @@ public class Article {
     @Column(name = "view")
     private long view;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "article_category",
             joinColumns = @JoinColumn(name = "article_id"),
