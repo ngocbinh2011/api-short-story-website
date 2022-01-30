@@ -45,8 +45,7 @@ public class ArticalController {
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } catch (Exception e) {
             logger.error("cant save article!", e);
-            String message = "save article failed!";
-            return Response.format(null, HttpStatus.BAD_REQUEST, message);
+            return Response.format(null, HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 

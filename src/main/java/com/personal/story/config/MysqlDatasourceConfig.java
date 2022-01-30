@@ -56,8 +56,8 @@ public class MysqlDatasourceConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             @Qualifier("mysqlArticleDatasource") DataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
-        vendorAdapter.setShowSql(true);
+        vendorAdapter.setGenerateDdl(false);
+        vendorAdapter.setShowSql(false);
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);

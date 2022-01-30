@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -28,8 +27,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAll());
     }
 
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> saveUser(@RequestBody User user) {
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> saveNewUser(@RequestBody User user) {
         try {
             if (user == null) {
                 throw new InvalidDataExeception("User must not null!");
@@ -45,9 +44,13 @@ public class UserController {
             }
         } catch (Exception e) {
             logger.error("save user failed!", e);
-            String message = "save user failed!";
-            return Response.format(null, HttpStatus.BAD_REQUEST, message);
+            return Response.format(null, HttpStatus.BAD_REQUEST, e.getMessage());
         }
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getUser(@PathVariable("id") int id) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getById(id));
     }
 
 }
