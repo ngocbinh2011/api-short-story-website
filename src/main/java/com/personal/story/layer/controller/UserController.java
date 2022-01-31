@@ -2,6 +2,7 @@ package com.personal.story.layer.controller;
 
 import com.personal.story.layer.application.entity.User;
 import com.personal.story.layer.application.exception.InvalidDataExeception;
+import com.personal.story.layer.application.service.IUserService;
 import com.personal.story.layer.application.service.impl.UserService;
 import com.personal.story.utils.Response;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ public class UserController {
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getListUser() {
@@ -31,20 +32,25 @@ public class UserController {
     public ResponseEntity<?> saveNewUser(@RequestBody User user) {
         try {
             if (user == null) {
-                throw new InvalidDataExeception("User must not null!");
+                throw new InvalidDataExeception("User must not be null!");
             }
-            User checkExists = userService.getByUsername(user.getUsername());
-            if(checkExists == null){
+            User userCheckExists = userService.getByUsername(user.getUsername());
+            if (userCheckExists == null) {
                 user.setCreatedAt(System.currentTimeMillis());
                 user.setUpdatedAt(System.currentTimeMillis());
                 User result = userService.save(user);
+                logger.info(String.format("Create new user[id=%d] completed!", result.getId()));
                 return ResponseEntity.status(HttpStatus.OK).body(result);
-            } else{
-                return Response.format(null, HttpStatus.BAD_REQUEST, "username already exists!");
+            } else {
+                return Response.format(null, HttpStatus.BAD_REQUEST, "Username already exists!");
             }
-        } catch (Exception e) {
-            logger.error("save user failed!", e);
+        } catch (InvalidDataExeception e) {
+            logger.error("Save user failed!", e);
             return Response.format(null, HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Throwable e) {
+            String message = "Internal Server Error";
+            logger.error(message);
+            return Response.format(null, HttpStatus.INTERNAL_SERVER_ERROR, message);
         }
     }
 
